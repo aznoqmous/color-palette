@@ -2,11 +2,10 @@ import App from "./App";
 import "./extensions"
 import "../scss/style.scss"
 import Color from "./Color";
+import ColorPalette from "./ColorPalette";
 
 document.addEventListener('DOMContentLoaded', ()=>{
     new App()
-
-    console.log(
-        (new Color("#ffd100")).toHexString()
-    )
 })
+
+window.colorpalette = ColorPalette

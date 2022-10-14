@@ -113,6 +113,14 @@ export default class ColorPalette extends Element {
             text: "Copy as image to your clipboard"
         }, this.settingsContainer)
         this.generateButton.addEventListener('click', ()=> this.copyImage())
+
+        this.shareButton = this.createElement({
+            class: "button",
+            text: "Share palette"
+        }, this.settingsContainer)
+        this.shareButton.addEventListener('click', ()=>{
+            navigator.clipboard.writeText(window.location.href + "?import=" + this.toDataUrl())
+        })
         
         this.colorsContainer = this.createElement({class: "colors-container"}, this.container)
         this.colors.map(color => this.addColor(new Color(color)))
@@ -254,5 +262,14 @@ export default class ColorPalette extends Element {
             text: color.toHexString()
         }, element)
         return element
+    }
+
+    toDataUrl(){
+        return encodeURIComponent(JSON.stringify(this.serialize()))
+    }
+
+    static fromDataUrl(url){
+        let data = JSON.parse(decodeURIComponent(url))
+        return new ColorPalette(data.uuid, data.colors, data.opts)
     }
 }

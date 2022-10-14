@@ -8,9 +8,24 @@ export default class App extends Element {
         this.activeColorPalette = null
         this.constructor.instance = this
         this.container = this.createElement({ class: "app" }, document.body)
+        
+        
+        
         this.build()
         this.load()
         this.buildColorPalettes()
+        
+        this.import()
+    }
+
+    import(){
+        let dataUrl = new URL(window.location).searchParams.get("import")
+        if(dataUrl){
+            let colorPalette = ColorPalette.fromDataUrl(dataUrl)
+            this.addColorPalette(colorPalette)
+            this.save()
+            history.pushState("", "", "/")
+        }
     }
 
     build(){
@@ -107,11 +122,14 @@ export default class App extends Element {
     }
 
     addColorPalette(data){
+        
         data = Object.assign({
             uuid: null,
             colors: null,
             opts: null
         }, data)
+
+        if(this.colorPalettes.filter(cp => cp.uuid == data.uuid).length) return
         let cp = new ColorPalette(data.uuid, data.colors, data.opts)
         this.colorPalettes.push(cp)
         return cp
