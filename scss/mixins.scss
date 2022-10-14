@@ -1,0 +1,61 @@
+@mixin font-face($family, $src, $fileArgs: '', $style: normal, $weight: normal) {
+    @font-face {
+      font-family: $family;
+      src: url('#{$src}.eot#{$fileArgs}'); // IE9 compatibility
+      src: url('#{$src}.eot#{$fileArgs}#iefix') format('embedded-opentype'), // IE8 and below
+      url('#{$src}.ttf#{$fileArgs}') format('truetype'), // Safari, Android, iOS
+      url('#{$src}.woff2#{$fileArgs}') format('woff2'), // new standards
+      url('#{$src}.woff#{$fileArgs}') format('woff'), // standards
+      url('#{$src}.svg#{$fileArgs}##{$family}') format('svg'); // legacy iOS
+      font-style: $style;
+      font-weight: $weight;
+    }
+  }
+  
+  @mixin row($horizontal: flex-start, $vertical: flex-start) {
+    display: flex;
+    justify-content: $horizontal;
+    align-items: $vertical;
+  }
+  
+  @mixin column($horizontal: flex-start, $vertical: flex-start) {
+    display: flex;
+    flex-direction: column;
+    justify-content: $vertical;
+    align-items: $horizontal;
+  }
+  
+  @mixin center {
+    @include row(center, center);
+  }
+  
+  @mixin size($width: 100%, $height: 100%) {
+    width: $width;
+    height: $height;
+  }
+  
+  @mixin square($size) {
+    @include size($size, $size);
+  }
+  
+  @mixin headings {
+    h1, h2, h3, h4, h5, h6 {
+      @content;
+    }
+  }
+
+  @mixin textBorder($size: 1px, $color: black) {
+    filter: drop-shadow(0 #{$size} 0 $color) drop-shadow(0 -#{$size} 0 $color) drop-shadow(#{$size} 0 0 $color) drop-shadow(-#{$size} 0 0 $color);
+  }
+
+  @mixin absoluteFill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @mixin transition($type:all){
+    transition: $type 0.2s ease;
+  }

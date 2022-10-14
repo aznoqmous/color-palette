@@ -1,0 +1,252 @@
+body {
+  padding: 1rem;
+  background: #f6f6f6;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+}
+
+.colors {
+  display: inline-flex;
+}
+
+.settings {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.button {
+  padding: 0.2rem 0.8rem;
+  border-radius: 5px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  background: white;
+  cursor: pointer;
+}
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.settings-container .input-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-group label {
+  margin-right: 1rem;
+}
+
+.app {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.app .color-palettes {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.app .color-palettes .color-palette {
+  position: relative;
+  width: 15rem;
+  height: 8rem;
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+.app .color-palettes .color-palette:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.app .color-palettes .color-palette canvas {
+  position: absolute;
+  width: 100% !important;
+  height: 100% !important;
+  image-rendering: pixelated;
+  z-index: -1;
+  background: #a5a5a5;
+}
+.app .color-palettes .color-palette span {
+  position: absolute;
+  left: 0.4rem;
+  bottom: 0.4rem;
+  line-height: 0.8em;
+  color: #f6f6f6;
+  z-index: 1;
+  opacity: 0;
+  font-size: 1.6rem;
+  text-shadow: 0 0 5px black;
+  transition: all 0.2s ease;
+}
+.app .color-palettes .color-palette i {
+  color: #ccc;
+  opacity: 0;
+  pointer-events: none;
+  text-shadow: 0 0 5px black;
+  padding: 0.3rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.app .color-palettes .color-palette i:hover {
+  color: white;
+}
+.app .color-palettes .color-palette:hover span {
+  opacity: 1;
+}
+.app .color-palettes .color-palette:hover i {
+  opacity: 1;
+  pointer-events: all;
+}
+.app .color-palettes .color-palette.active span {
+  opacity: 1;
+}
+.app .active-color-palette .color-palette {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+}
+.app .active-color-palette .color-palette .colors-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.app .active-color-palette .color-palette .colors-container .colors:first-child .color:first-child {
+  border-radius: 5px 0 0 0;
+}
+.app .active-color-palette .color-palette .colors-container .colors:last-child .color:first-child {
+  border-radius: 0 0 0 5px;
+}
+.app .active-color-palette .color-palette .colors-container .colors .color {
+  width: 2.5rem;
+  height: 2.5rem;
+  transition: transform 0.2s ease;
+  border: 0px solid white;
+  position: relative;
+}
+.app .active-color-palette .color-palette .colors-container .colors .color span {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  background: white;
+  border-radius: 3px;
+  padding: 0.1rem 0.2rem;
+  transform: translate(-50%, 0);
+  font-weight: bold;
+  font-size: 0.8rem;
+  filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.2));
+  transition: all 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.app .active-color-palette .color-palette .colors-container .colors .color span:before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  background: white;
+  left: 50%;
+  bottom: 100%;
+  position: absolute;
+  transform: translate(-50%, 50%) rotate(45deg);
+}
+.app .active-color-palette .color-palette .colors-container .colors .color:hover {
+  border-radius: 5px;
+  border: 2px solid white;
+  z-index: 1;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  transform: scale(1.1);
+}
+.app .active-color-palette .color-palette .colors-container .colors .color:hover span {
+  opacity: 1;
+}
+.app .active-color-palette .color-palette .colors-container .colors .settings > * {
+  cursor: pointer;
+}
+.app .active-color-palette .color-palette .colors-container .colors .settings .drag {
+  cursor: ns-resize;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.app .active-color-palette .color-palette .colors-container .colors .settings .delete {
+  opacity: 0;
+}
+.app .active-color-palette .color-palette .colors-container .colors:hover .settings .delete {
+  opacity: 1;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+.input-group label {
+  position: absolute;
+  left: 0.5rem;
+  top: 0;
+  pointer-events: none;
+  transform: translate(0, -50%);
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.input-group input {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0.6rem 0.5rem;
+  width: 100%;
+  background: white;
+  border-radius: 5px;
+  border: 1px solid #eee;
+  cursor: pointer;
+}
+.input-group input:focus {
+  border: 1px solid #ddd;
+}
+.input-group .color-preview {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 1rem;
+  height: 1rem;
+  display: block;
+  border-radius: 3px;
+  border: 1px solid white;
+  outline: 1px solid #ddd;
+}
+
+.input-title {
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+}
+.input-title label {
+  display: none;
+}
+.input-title input {
+  padding: 0;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 1.5rem;
+  border-bottom: 1px solid transparent;
+}
+.input-title input:focus {
+  border-bottom: 1px solid black;
+}
